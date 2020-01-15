@@ -13,7 +13,7 @@ def upload_file(filename, client):
             filename: File to be uploaded
             client: Client to handle http post for file upload
         Returns:
-            soup: A BeautifulSoup object of response
+            BeautifulSoup object: A BeautifulSoup object of response
 
     """
     upload_path = os.path.join(settings.BASE_DIR, filename)
