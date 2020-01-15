@@ -24,7 +24,7 @@ class UploadView(View):
                 {"skills": skills, "process_time": end_time - start_time}
             )
             if not skills:
-                context.update({"message": "Cannot Extract skills form your CV."})
+                context.update({"message": "Cannot extract skills form your CV."})
         else:
             context.update({"message": "Error processing your CV. Please reupload it"})
         return render(request, "fileupload.html", context)
