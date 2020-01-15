@@ -14,6 +14,7 @@ This project is based on Django==3.0.2 and a library named [pyresparser](https:/
 git clone https://github.com/aakashres/cvparser.git
 cd cvparser
 pip install -r requirements.txt
+python -m spacy download en_core_web_sm
 python -m nltk.downloader words
 cd cvparseproject
 python manage.py runserver
