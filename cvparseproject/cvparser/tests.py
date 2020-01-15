@@ -19,8 +19,7 @@ def upload_file(filename, client):
     upload_path = os.path.join(settings.BASE_DIR, filename)
     with open(upload_path, 'rb') as attachment:
         response = client.post('/', {'cv':attachment},format='multipart')
-        soup = BeautifulSoup(response.content, "html.parser")
-        return soup
+        return BeautifulSoup(response.content, "html.parser")
 
 class Upload(TestCase):
     """
