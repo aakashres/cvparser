@@ -7,7 +7,7 @@ class CVForm(forms.Form):
             attrs={
                 "class": "custom-file-input",
                 "id": "validatedCustomFile",
-                "required": True,
+                "required": 'true',
             }
         )
     )

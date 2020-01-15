@@ -1,16 +1,15 @@
-import os
-from django.conf import settings
+import time
+from .utils import handle_uploaded_file
 from django.shortcuts import render
 from django.views.generic import View
 from .forms import CVForm
-from pyresparser import ResumeParser
 
 # Create your views here.
 
 
 class UploadView(View):
     def get(self, request):
-        context = {"form": CVForm(), "skills": None}
+        context = {"form": CVForm(), "skills": None, "process_time": None}
         return render(request, "fileupload.html", context)
 
     def post(self, request):
@@ -19,19 +18,8 @@ class UploadView(View):
         context = {"form": form}
         cvfile = request.FILES.get("cv")
         if cvfile.name.split(".")[-1].lower() in ["pdf", "doc"]:
+            start_time = time.time()
             data = handle_uploaded_file(cvfile)
-        if data:
-            context.update({"skills": data})
+            end_time = time.time()
+            context.update({"skills": data.get("skills"), "process_time": end_time - start_time})
         return render(request, "fileupload.html", context)
-
-
-def handle_uploaded_file(cv):
-    upload_path = os.path.join(settings.BASE_DIR, "uploads", cv.name)
-    print(upload_path)
-    with open(upload_path, "wb+") as destination:
-        for chunk in cv.chunks():
-            destination.write(chunk)
-    data = ResumeParser(upload_path).get_extracted_data()
-    os.remove(upload_path)
-    print(data)
-    return data
