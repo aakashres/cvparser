@@ -1,6 +1,6 @@
 from django.conf.urls import url
-from .views import HomeView
+from .views import UploadView
 
 urlpatterns = [
-    url(r'^$', HomeView.as_view(), name="home"),
+    url(r'^$', UploadView.as_view(), name="upload"),
 ]

@@ -1,34 +1,32 @@
-{% load static %}
 <!doctype html>
-
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
-
-    <title>
-        {% block title %}
-        {% endblock %}
-    </title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <meta content="" name="description" />
-    <meta content="" name="author" />
-
-    {% block extra_head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Simple site to extract skills from your CV">
+    <meta name="author" content="Aakash Shrestha">
+    <title>CV Parser</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> `
+    {% block extra_style %}
     {% endblock %}
-
-    <style type="text/css">
-        {% block extra_style %}
-        {% endblock %}
-    </style>
 </head>
 
-<body>
+<body class="bg-light">
+    <div class="container">
     {% block content %}
     {% endblock %}
+
+        <footer class="my-5 pt-5 text-muted text-center text-small">
+            <p class="mb-1">&copy; 2017-2019 Company Name</p>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="#">Support</a></li>
+            </ul>
+        </footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     {% block extra_js %}
     {% endblock %}
-</body>
-
 </html>
