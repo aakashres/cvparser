@@ -16,7 +16,7 @@ class UploadView(View):
         form = CVForm(request.POST or None, request.FILES or None)
         context = {"form": form}
         cvfile = request.FILES.get("cv", None)
-        if cvfile and cvfile.name.split(".")[-1].lower() in ["pdf", "doc",  "docx"]:
+        if cvfile and cvfile.name.split(".")[-1].lower() in ["pdf", "doc", "docx"]:
             start_time = time.time()
             skills = handle_uploaded_file(cvfile)
             end_time = time.time()
