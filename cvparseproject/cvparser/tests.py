@@ -14,6 +14,7 @@ class Upload(TestCase):
         2. Proper CV in docx format
         3. Proper CV in pdf format
         4. File with a wrong format
+        5. File with right extension but no data
     """
     def setUp(self):
         self.client = Client()
