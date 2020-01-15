@@ -6,6 +6,13 @@ from bs4 import BeautifulSoup
 
 # Create your tests here.
 
+def upload_file(filename, client):
+    upload_path = os.path.join(settings.BASE_DIR, filename)
+    with open(upload_path, 'rb') as attachment:
+        response = client.post('/', {'cv':attachment},format='multipart')
+        soup = BeautifulSoup(response.content, "html.parser")
+        return soup
+    return None
 
 class Upload(TestCase):
     """
@@ -24,10 +31,7 @@ class Upload(TestCase):
             CV in doc format is properly parsed and skills are extracted
         """
         skills = []
-        upload_path = os.path.join(settings.BASE_DIR, "tests/test1.doc")
-        with open(upload_path, 'rb') as attachment:
-            response = self.client.post('/', {'cv':attachment},format='multipart')
-        soup = BeautifulSoup(response.content, "html.parser")
+        soup = upload_file("tests/test1.doc", self.client)
         skills = soup.find_all("span", class_="badge badge-primary")
         self.assertNotEqual(0, len(skills))
 
@@ -36,10 +40,7 @@ class Upload(TestCase):
             CV in docx format is properly parsed and skills are extracted
         """
         skills = []
-        upload_path = os.path.join(settings.BASE_DIR, "tests/test2.docx")
-        with open(upload_path, 'rb') as attachment:
-            response = self.client.post('/', {'cv':attachment},format='multipart')
-        soup = BeautifulSoup(response.content, "html.parser")
+        soup = upload_file("tests/test2.docx", self.client)
         skills = soup.find_all("span", class_="badge badge-primary")
         self.assertNotEqual(0, len(skills))
 
@@ -48,10 +49,7 @@ class Upload(TestCase):
             CV in pdf format is properly parsed and skills are extracted
         """
         skills = []
-        upload_path = os.path.join(settings.BASE_DIR, "tests/test3.pdf")
-        with open(upload_path, 'rb') as attachment:
-            response = self.client.post('/', {'cv':attachment},format='multipart')
-        soup = BeautifulSoup(response.content, "html.parser")
+        soup = upload_file("tests/test3.pdf", self.client)
         skills = soup.find_all("span", class_="badge badge-primary")
         self.assertNotEqual(0, len(skills))
 
@@ -59,20 +57,15 @@ class Upload(TestCase):
         """
             Proper error message is thrown for file with wrong extension
         """
-        upload_path = os.path.join(settings.BASE_DIR, "tests/test4.txt")
-        with open(upload_path, 'rb') as attachment:
-            response = self.client.post('/', {'cv':attachment},format='multipart')
-        soup = BeautifulSoup(response.content, "html.parser")
+        soup = upload_file("tests/test4.txt", self.client)
         message = soup.find("div", class_="invalid-form-message").contents[0]
         self.assertEqual("Error processing your CV. Please reupload it", message)
 
     def test_right_extension_files_no_content(self):
         """
-            Proper error message is thrown for file with wrong extension
+            Proper error message is thrown for file with right extension
+            and from which skills cannot be extracted.
         """
-        upload_path = os.path.join(settings.BASE_DIR, "tests/test5.doc")
-        with open(upload_path, 'rb') as attachment:
-            response = self.client.post('/', {'cv':attachment},format='multipart')
-        soup = BeautifulSoup(response.content, "html.parser")
+        soup = upload_file("tests/test5.doc", self.client)
         message = soup.find("div", class_="invalid-form-message").contents[0]
-        self.assertEqual("Cannot Extract skills form your CV.", message)
+        self.assertEqual("Cannot extract skills form your CV.", message)
