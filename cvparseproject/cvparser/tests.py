@@ -7,12 +7,20 @@ from bs4 import BeautifulSoup
 # Create your tests here.
 
 def upload_file(filename, client):
+    """
+        Fires a request that uploads file for test purpose
+        Parameters:
+            filename: File to be uploaded
+            client: Client to handle http post for file upload
+        Returns:
+            soup: A BeautifulSoup object of response
+
+    """
     upload_path = os.path.join(settings.BASE_DIR, filename)
     with open(upload_path, 'rb') as attachment:
         response = client.post('/', {'cv':attachment},format='multipart')
         soup = BeautifulSoup(response.content, "html.parser")
         return soup
-    return None
 
 class Upload(TestCase):
     """
