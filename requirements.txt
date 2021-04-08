@@ -7,7 +7,7 @@ catalogue==1.0.0
 certifi==2019.11.28
 chardet==3.0.4
 cymem==2.0.3
-Django==3.0.3
+Django==3.0.14
 docx2txt==0.8
 EbookLib==0.17.1
 extract-msg==0.23.1
